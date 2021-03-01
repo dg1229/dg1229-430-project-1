@@ -6,6 +6,7 @@
   "scripts": {
     "pretest": "eslint ./src --fix",
     "test": "echo \"Tests complete\"",
+    "start": "node src/index.js",
     "nodemon": "npx nodemon ./src/index.js"
   },
   "keywords": [],
