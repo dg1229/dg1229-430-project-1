@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+body{
+    font-family: Noto Sans, sans-serif;
+    text-align: center;
+}
+
+header{
+    background-color:red;
+    color: white;
+    font-size:2em;
+    padding:1em;
+}
+
+header button{
+    background-color: white;
+    border-radius: 20px;
+    font-size: 0.5em;
+    color: black;
+    font-family: Noto Sans, sans-serif;
+    float: left;
+}
+
+#streamsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+.stream{
+    margin: 20px;
+    padding: auto;
+    background-color: lightgray;
+    border-radius: 20px;
+    width: 400px;
+    height: 400px;
+}
+
+.favorite a {
+    width: 200px;
+    padding: 10px;
+    margin: 10;
+    text-decoration: none;
+    background-color: gray;
+    color: black;
+    border-radius: 25px;
+    font-size: 25px;
+}
+
+.stream h1 {
+    margin-left: 10px;
+    font-size: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 150px;
+}
+
+.stream img {
+    width: 90%;
+}
+
+.stream a {
+    padding: 5px;
+    margin-top: 5px;
+    text-decoration: none;
+    background-color: red;
+    color: white;
+    border-radius: 25px;
+    font-size: 15px;
+}
+
+.btnNav {
+    margin-top: 1em;
+    color: black;
+    border-radius: 20px;
+    font-size: 20px;
+    background-color: white;
+}
+
+#searchString {
+    width: 25%;
+    border-radius: 5px;
+}

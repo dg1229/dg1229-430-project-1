@@ -1,13 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
     <title>YouTube Streams</title>
-</head>
-<body>
-    <input id="term"type="text" placeholder="Search...">
-    <a href="/search">Search</a>
-</body>
+    <style>
+        body{
+            font-family: Noto Sans, sans-serif;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="/logo.png" alt="YouTube Logo"/>
+      <h1>Welcome to YouTube Stream Finder</h1>
+    </header> 
+    <h2>YouTube Stream Finder is a tool to better locate YouTube streamer's channels!</h2>
+    <section>
+        <h1>Users</h1>
+        <ul>
+            <li>Head to <a href="/app">App</a> to find and save your favorite streams!</li>
+        </ul>
+    </section>
+    <section>
+        <h1>Developers</h1>
+        <p>Here are the YouTube Stream Finder API endpoints:</p>
+        <ul>
+            <li><a href="/search?term='fortnite'">/search?term="fortnite"</a></li>
+            <li><a href="/getStreams">/getStreams</a></li>
+        </ul>
+        <p>The first endpoint retrieves streams from YouTube with the search term provided.</br>
+        The second endpoint retrives channels that have been favorited within the YouTube Stream Finder app.</p>
+    </section>
+    <section>
+        <h1>Administrators</h1>
+        <ul>
+            <li>Head to <a href="/admin">Admin</a> to see all YouTube channels favorited on the app.</li>
+            <li>Check out the <a href="/bad-link">404 page</a></li>
+            <li>View the app's <a href="/default-styles.css">CSS</a></li>
+            <li>See the <a href="/logo.png">YouTube logo</a> used on this site</li>
+        </ul>
+    </section>
+  </body>
 </html>

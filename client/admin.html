@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>YouTube Streams</title>
+    <link rel="stylesheet" href="./default-styles.css">
+    <script>
+        const init = () => {
+            //Clear current favorites
+            document.querySelector("#streamsContainer").innerHTML = ``;
+
+            //Get and list favorited streams/channels from local API endpoint.
+            fetch('/getStreams')
+            .then(resp => resp.json())
+            .then(data => {
+                let channels = data.channels;
+                console.log(channels);
+                return Object.keys(channels).map(item => {
+                    document.querySelector("#streamsContainer").innerHTML += `<div class="favorite"><a href="${channels[item].url}">Go to ${channels[item].name}'s channel</a></div>`;
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+    
+        window.onload = init;
+    </script>
+  </head>
+  <body>
+    <header>
+      <a href="/"><button>Home</button></a>
+      <h1>YouTube Streams</h1>
+    </header>
+    <section>   
+      <h2>Your Favorite Streamer's Channels</h2>
+      <div id="streamsContainer"></div>
+    </section>
+    
+  </body>
+</html>

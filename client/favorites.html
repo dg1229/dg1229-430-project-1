@@ -4,9 +4,91 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favorite Streams</title>
+    <link rel="stylesheet" href="./default-styles.css">
+    <title>Favorite Channels</title>
+    <script>
+
+        //Display relevant status message
+        const handleResponse = (xhr) => {
+            const content = document.querySelector('#content');
+
+            switch(xhr.status){
+                case 200:
+                    content.innerHTML = '<b>Success!</b>'
+                    break;
+                case 201:
+                    content.innerHTML = '<b>Created!</b>'
+                    break;
+                case 204:
+                    content.innerHTML = '<b>Updated (No Content)!</b>'
+                    break;
+                case 400:
+                    content.innerHTML = '<b>Bad Request</b>'
+                    break;
+                default:
+                    content.innerHTML = '<b>Error code not implemented by client</b>'
+                    break;
+            }
+
+            if(xhr.status != 204){
+                const obj = JSON.parse(xhr.response);
+                console.dir(obj);
+
+                if(obj.message){
+                    content.innerHTML += `<p>${obj.message}</p>`;
+                }
+            }
+        };
+
+        //Send POST request with fields given from the form
+        const sendPost = (e, streamForm) => {
+            e.preventDefault();
+
+            const streamAction = streamForm.getAttribute('action');
+            const streamMethod = streamForm.getAttribute('method');
+
+            const nameField = streamForm.querySelector('#nameField');
+            const urlField = streamForm.querySelector('#urlField');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(streamMethod, streamAction);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = () => handleResponse(xhr);
+
+            const formData = `name=${nameField.value}&url=${urlField.value}`;
+            xhr.send(formData);
+
+            return false;
+        }
+
+        //Initialize variables and event listeners.
+        const init = () => {
+            const streamForm = document.querySelector('#streamForm');
+
+            const addStream = (e) => sendPost(e, streamForm);
+
+            streamForm.addEventListener('submit', addStream);
+        }
+
+        window.onload = init;
+    </script>
 </head>
 <body>
-    
+    <header>
+        <a href="/app"><button>Back</button></a>
+        <h1>YouTube Streams</h1>
+      </header>
+    <h1>Manually add your favorite channel!</h1>
+    <p>Enter the name of the channel and the link to their channel below.</br>Then press 'Add Stream'.</p>
+    <form id="streamForm" action="/addStream" method="post">
+        <label for="name">Channel Name: </label>
+        <input id="nameField" type="text" name="name"/>
+        <label for="url">Channel Link: </label>
+        <input id="urlField" type="url" name="url"/>
+        <input type="submit" value="Add Steam"/>
+    </form>
+    <span id="content"></span>
 </body>
 </html>

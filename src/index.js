@@ -8,11 +8,55 @@ const htmlHandler = require('./htmlResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const urlStruct = {
-  '/search': responseHandler.loadStreams,
-  '/streams': htmlHandler.getStreams,
-  notFound: htmlHandler.get404Response
-};
+//Call the function relevant to POST request endpoint.
+const handlePost = (request, response, parsedUrl) => {
+  if(parsedUrl.pathname === '/addStream'){
+    const body = [];
+
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      responseHandler.addStream(request, response, bodyParams);
+    });
+  }
+}
+
+const handleGet = (request, response, parsedUrl) => {
+
+  const params = query.parse(parsedUrl.query);
+
+  //Call the function relevant to GET request endpoint.
+  if(parsedUrl.pathname === '/'){
+    htmlHandler.getIndex(request, response);
+  } else if(parsedUrl.pathname ==='/logo.png'){
+    htmlHandler.getLogo(request, response);
+  } else if(parsedUrl.pathname === '/app'){
+    htmlHandler.getStreams(request, response);
+  } else if(parsedUrl.pathname === '/default-styles.css'){
+    htmlHandler.getCSS(request, response);
+  }else if(parsedUrl.pathname === '/search'){
+    responseHandler.loadStreams(request, response, params);
+  } else if(parsedUrl.pathname === '/favorites'){
+    htmlHandler.getFavorites(request, response);
+  }else if(parsedUrl.pathname === '/getStreams'){
+    responseHandler.getStreams(request, response);
+  } else if(parsedUrl.pathname === '/admin'){
+    htmlHandler.getAdmin(request, response);
+  } else{
+    htmlHandler.get404Response(request, response);
+  }
+}
 
 const onRequest = (request, response) => {
   //console.log(request.headers);
@@ -20,11 +64,12 @@ const onRequest = (request, response) => {
   const { pathname } = parsedUrl;
   const params = query.parse(parsedUrl.query);
   console.log(pathname);
+  //console.log(params);
 
-  if(urlStruct[pathname]){
-	urlStruct[pathname](request, response, params);
-  }else{
-    urlStruct.notFound(request,response);
+  if(request.method === 'POST'){
+    handlePost(request, response, parsedUrl);
+  } else {
+    handleGet(request, response, parsedUrl);
   }
 };
 
