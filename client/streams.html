@@ -12,9 +12,32 @@
           document.querySelector("#streamsContainer").innerHTML = "";
           for(let i = 0; i < obj.length; i++){
               document.querySelector("#streamsContainer").innerHTML += `<div class="stream"><h1>${obj[i].title}</h1></br><img src="${obj[i].thumbnails.high.url}"`+
-                ` alt="thumbnail"></br><a href="https://youtube.com/channel/${obj[i].channelId}">Go to ${obj[i].channelTitle}'s channel</a></div>`;
+                ` alt="thumbnail"></br><a href="https://youtube.com/channel/${obj[i].channelId}">Go to ${obj[i].channelTitle}'s channel</a>`+
+                `<button class="subStream" id="btn${i}">Favorite</button>`;
+          }
+          for(let i = 0; i < obj.length; i++){
+            document.querySelector(`#btn${i}`).addEventListener("click", function(){sendPost(obj[i])});
           }
       };
+
+      //Send POST request with fields given from the form
+      function sendPost(obj){
+
+            const streamAction = "/addStream";
+            const streamMethod = "POST";
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(streamMethod, streamAction);
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            const formData = `name=${obj.channelTitle}&url=https://youtube.com/channel/${obj.channelId}`;
+            xhr.send(formData);
+            //console.log(formData);
+
+            return false;
+        };
+
       function downloadStreams(term) {
           // remeber that an `Event` object gets passed along every time that an event handler or listener calls a function
           // the `target` property of that event points at the element that sent the event, in this case a button

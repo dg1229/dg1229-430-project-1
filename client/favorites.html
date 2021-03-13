@@ -59,6 +59,7 @@
 
             const formData = `name=${nameField.value}&url=${urlField.value}`;
             xhr.send(formData);
+            //console.log(formData);
 
             return false;
         }
@@ -87,7 +88,7 @@
         <input id="nameField" type="text" name="name"/>
         <label for="url">Channel Link: </label>
         <input id="urlField" type="url" name="url"/>
-        <input type="submit" value="Add Steam"/>
+        <input type="submit" value="Add Stream"/>
     </form>
     <span id="content"></span>
 </body>
