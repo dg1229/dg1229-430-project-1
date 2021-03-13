@@ -35,10 +35,13 @@ header button{
     height: 460px;
 }
 
-.favorite a {
+.favorite {
+    margin: 40px;
+}
+
+.favorite a{
     width: 200px;
     padding: 10px;
-    margin: 10;
     text-decoration: none;
     background-color: gray;
     color: black;
